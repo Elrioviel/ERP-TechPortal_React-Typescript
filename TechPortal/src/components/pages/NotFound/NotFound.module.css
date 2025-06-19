@@ -1,0 +1,30 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(80deg, #fffef6, #fff67f);
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .content {
+    text-align: center;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 40px 60px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: scale(0.95);
+  }
+  
+  .header {
+    font-size: 100px;
+    font-weight: bold;
+    color: #FF5733;
+    margin-bottom: 40px;
+  }
+  
+  .text {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 30px;
+  }

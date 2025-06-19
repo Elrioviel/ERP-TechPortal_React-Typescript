@@ -1,0 +1,22 @@
+.layout {
+    padding-top: var(--header-height);
+    grid-template-columns: 200px 1fr;
+    display: flex;
+    background: #f3f4f7;
+}
+
+.mainContent {
+  height: calc(100dvh - var(--header-height));
+  width: 100%;
+  overflow: auto;
+  display: flex;
+}
+
+@media (max-width: 600px) {
+  .layout {
+    grid-template-columns: 0.5fr;
+    display: flex;
+    padding-top: var(--header-height);
+    height: 100%;
+  }
+}
