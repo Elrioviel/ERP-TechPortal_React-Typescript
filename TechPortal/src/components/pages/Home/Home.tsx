@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router";
 import PowerTable from "@/components/pages/Home/PowerTable/PowerTable";
-import KtuTable from "@/components/pages/KtuTable/KtuTable";
+import KtuTable from "@/components/pages/Home/KtuTable/KtuTable";
 import ModuleCards from "@/components/pages/Home/ModuleCards/ModuleCards";
 import cl from './Home.module.css';
 import backgroundImg from '../../../assets/girlwindow.webp';

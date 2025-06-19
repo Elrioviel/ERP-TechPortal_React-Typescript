@@ -173,11 +173,10 @@ li:has(.logout) {
 
     .sidebarItem {
         margin-top: 15px;
-        font-size: 18px;
         padding: 5px;
-        font-size: 16px;
+        font-size: 15px;
         letter-spacing: 0;
-        text-align: left;
+        text-align: center;
     }
 
     .logout {
