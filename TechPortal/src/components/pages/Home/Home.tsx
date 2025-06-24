@@ -3,7 +3,6 @@ import PowerTable from "@/components/pages/Home/PowerTable/PowerTable";
 import KtuTable from "@/components/pages/Home/KtuTable/KtuTable";
 import ModuleCards from "@/components/pages/Home/ModuleCards/ModuleCards";
 import cl from './Home.module.css';
-import backgroundImg from '../../../assets/girlwindow.webp';
 
 const Home = () => {
   const [searchParams] = useSearchParams();
@@ -27,11 +26,9 @@ const Home = () => {
 
       {!showPowerPlan && !showKtu && (
         <>
-          <div
-            className={cl.background}
-            style={{ backgroundImage: `url(${backgroundImg})` }}
-          />
-          <ModuleCards />
+          <div className={cl.background}>
+            <ModuleCards />
+          </div>
         </>
       )}
     </div>

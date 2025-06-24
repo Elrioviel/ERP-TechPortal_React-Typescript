@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import { fetchWithAuth } from "@/services/fetchWithAuth";
 import { useAuth } from "@/context/AuthContext";
 import config from "@/config";
-import styles from "./KtuTable.module.css";
+import styles from "@/components/pages/Home/KtuTable/KtuTable.module.css";
 import Lottie from "lottie-react";
-import animationData from "@/assets/OTQEEvxFK8.json";
 
 type KtuPerson = {
   id: number;
@@ -25,13 +24,21 @@ const KtuTable = () => {
   const [newKtu, setNewKtu] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [animationData, setAnimationData] = useState(null); // <-- для Lottie
+
+  useEffect(() => {
+    // Загрузка анимации
+    fetch("/assets/OTQEEvxFK8.json")
+      .then((res) => res.json())
+      .then(setAnimationData)
+      .catch((err) => console.error("Ошибка загрузки анимации:", err));
+  }, []);
 
   useEffect(() => {
     if (!token) return;
-  
+
     const fetchKtuData = async () => {
       try {
-        console.log("Отправка запроса на получение KTU");
         const response = await fetchWithAuth(`${config.API_BASE_URL}/PeopleKTU/GetPeopleKTU`);
         if (response.ok) {
           const data: KtuPerson[] = await response.json();
@@ -46,9 +53,9 @@ const KtuTable = () => {
         setLoading(false);
       }
     };
-  
+
     fetchKtuData();
-  }, [token]); 
+  }, [token]);
 
   useEffect(() => {
     const term = searchTerm.toLowerCase();
@@ -69,12 +76,11 @@ const KtuTable = () => {
 
     try {
       const personResponse = await fetchWithAuth(`${config.API_BASE_URL}/PeopleKTU/GetPersonKTU?idPeople=${id}`);
-  
       if (!personResponse.ok) {
         alert("Ошибка при получении данных пользователя");
         return;
       }
-  
+
       const personData = await personResponse.json();
 
       const insertResponse = await fetchWithAuth(`${config.API_BASE_URL}/PeopleKTU/InsertPersonKTU`, {
@@ -87,11 +93,9 @@ const KtuTable = () => {
           tax: personData.tax
         }),
       });
-  
+
       if (insertResponse.ok) {
-        const updated = people.map((p) =>
-          p.id === id ? { ...p, ktu: newKtu } : p
-        );
+        const updated = people.map((p) => (p.id === id ? { ...p, ktu: newKtu } : p));
         setPeople(updated);
         setEditingId(null);
       } else {
@@ -115,7 +119,7 @@ const KtuTable = () => {
     return (
       <div className={styles.loader}>
         <h2>Загружаем данные... это займет пару секунд...</h2>
-        <Lottie animationData={animationData} loop />
+        {animationData && <Lottie animationData={animationData} loop />}
       </div>
     );
   }
@@ -123,14 +127,14 @@ const KtuTable = () => {
   return (
     <div className={styles.container}>
       <h1>КТУ сотрудников</h1>
-        
-        <input
-          type="text"
-          placeholder="Поиск по ФИО"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className={styles.searchInput}
-        />
+
+      <input
+        type="text"
+        placeholder="Поиск по ФИО"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className={styles.searchInput}
+      />
 
       <div className={styles.tableWrapper}>
         <table className={styles.ktuTable}>
@@ -187,10 +191,7 @@ const KtuTable = () => {
       </div>
 
       <div className={styles.pagination}>
-        <button
-          onClick={() => setCurrentPage((prev) => prev - 1)}
-          disabled={currentPage === 1}
-        >
+        <button onClick={() => setCurrentPage((prev) => prev - 1)} disabled={currentPage === 1}>
           Предыдущие
         </button>
         <span>Страница {currentPage} из {totalPages}</span>

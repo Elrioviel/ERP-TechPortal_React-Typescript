@@ -1,6 +1,6 @@
 import { useAuth } from "@/context/AuthContext";
-import cl from "./Header.module.css";
-import logo from "../../../../assets/logo.svg";
+import cl from "@/components/layout/BasicLayout/Header/Header.module.css";
+import logo from "/assets/logo.svg?url";
 import { Link } from "react-router";
 
 interface HeaderProps {
